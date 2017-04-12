@@ -9,14 +9,28 @@ const GroceryList = () => (
 class Pizza extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      hover: false
+    };
   }
+
+  onListItemHover() {
+    this.setState({
+      hover: !this.state.hover
+    });
+  }
+
   render() {
+    let hoverStyle = {
+      textDecoration: this.state.hover ? 'line-through' : 'none'
+    };
+
     return (
+    
     <div>
       <h3>Pizza is EVERYTHING!</h3>
       <ul>
-        <li>{this.props.toppings[0]}</li>
+        <li style={hoverStyle} onMouseEnter={this.onListItemHover.bind(this)} onMouseLeave={this.onListItemHover.bind(this)} >{this.props.toppings[0]}</li>
         <li>{this.props.toppings[1]}</li>
         <li>{this.props.toppings[2]}</li>
       </ul>
@@ -74,7 +88,7 @@ class TodoListItem extends React.Component {
   render() {
     // Making the style conditional on our `state` lets us 
     // update it based on user interactions.
-    var style = {
+    let style = {
       textDecoration: this.state.done ? 'line-through' : 'none'
     };
 
