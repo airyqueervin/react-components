@@ -1,9 +1,18 @@
 const GroceryList = () => (
   <div>
     <h2>Get Food!</h2>
-    <Pizza toppings={['Pepperoni', 'Cheese', 'Sauce']}/>
+    <h3>Pizza is EVERYTHING!</h3>
+    <PizzaList toppings={['Pepperoni', 'Cheese', 'Sauce']}/>
     <Bagles spread={['Plain Cream Cheese', 'Chive and Onion', 'Strawberry']} />
   </div>
+);
+
+const PizzaList = (props) => (
+  <ul>
+    {props.toppings.map(topping =>
+      <Pizza key={Math.random() * 100000} topping={topping} />
+    )}
+  </ul>
 );
 
 class Pizza extends React.Component {
@@ -12,6 +21,8 @@ class Pizza extends React.Component {
     this.state = {
       hover: false
     };
+
+    this.onListItemHover = this.onListItemHover.bind(this);
   }
 
   onListItemHover() {
@@ -22,19 +33,12 @@ class Pizza extends React.Component {
 
   render() {
     let hoverStyle = {
-      textDecoration: this.state.hover ? 'line-through' : 'none'
+      fontWeight: this.state.hover ? 'bold' : 'normal'
+      // textDecoration: this.state.hover ? 'line-through' : 'none'
     };
 
     return (
-    
-    <div>
-      <h3>Pizza is EVERYTHING!</h3>
-      <ul>
-        <li style={hoverStyle} onMouseEnter={this.onListItemHover.bind(this)} onMouseLeave={this.onListItemHover.bind(this)} >{this.props.toppings[0]}</li>
-        <li>{this.props.toppings[1]}</li>
-        <li>{this.props.toppings[2]}</li>
-      </ul>
-    </div>
+      <li style={hoverStyle} onMouseEnter={this.onListItemHover} onMouseLeave={this.onListItemHover} >{this.props.topping}</li>
     );
   }
 }
@@ -62,7 +66,7 @@ class Bagles extends React.Component {
 
 ReactDOM.render(<GroceryList />, document.getElementById('app')); 
 
-// -----------------------------
+// -----------------------------DEMO STUFF-------------------------
 
 // A class component can be defined as an ES6 class
 // that extends the base Component class included in the React library
