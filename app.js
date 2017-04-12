@@ -3,7 +3,8 @@ const GroceryList = () => (
     <h2>Get Food!</h2>
     <h3>Pizza is EVERYTHING!</h3>
     <PizzaList toppings={['Pepperoni', 'Cheese', 'Sauce']}/>
-    <Bagles spread={['Plain Cream Cheese', 'Chive and Onion', 'Strawberry']} />
+    <h3>Bagels Fridays!</h3>
+    <BagelList spreads={['Plain Cream Cheese', 'Chive and Onion', 'Strawberry']} />
   </div>
 );
 
@@ -43,23 +44,39 @@ class Pizza extends React.Component {
   }
 }
 
+const BagelList = (props) => (
+  <ul>
+    {props.spreads.map(spread =>
+      <Bagels key={Math.random() * 100000} spread={spread} />
+    )}
+  </ul>
+);
 
-class Bagles extends React.Component {
+
+class Bagels extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      hover: false
+    };
+
+    this.onListItemHover = this.onListItemHover.bind(this);
+  }
+
+  onListItemHover() {
+    this.setState({
+      hover: !this.state.hover
+    });
   }
 
   render() {
+     let hoverStyle = {
+      fontWeight: this.state.hover ? 'bold' : 'normal'
+      // textDecoration: this.state.hover ? 'line-through' : 'none'
+    };
     return (
-      <div>
-        <h3>Bagels Fridays!</h3>
-        <ul>
-          <li>{this.props.spread[0]}</li>
-          <li>{this.props.spread[1]}</li>
-          <li>{this.props.spread[2]}</li>
-        </ul>
-      </div> 
+      <li style={hoverStyle} onMouseEnter={this.onListItemHover} onMouseLeave={this.onListItemHover} >{this.props.spread}</li>
+
     );
   }
 }
